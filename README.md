@@ -38,15 +38,24 @@ and evaluates the equation.
 Note: Short bitwise operators (like &, |, ^, >>) are often combined to create complex, polyrhythmic, 
 and melodic sounds. For example, the famous one-liner ```(t>>6|t|t>>(t>>16))*10+46``` generates a thumping, arpeggiated bassline.
 
-## ❓ Why I made this but there is some websites you can experiment?
+## ❓ Why I made this app but there are some websites you can experiment?
 I made this because with people wanted to make Bytebeat formulas into their computers,
-online needs WiFi or Ethernet while offline doesn't need it.
+online needs WiFi or Ethernet, while offline doesn't need it.
 
-Which I build this project and with the help of AI, I can build my own parser, lexer, engine, and exporter from scratch without
-needing help of external libraries.
+Which resulted me to build this project and with the help of AI, I can build my own parser, lexer, engine, and exporter from scratch without needing help of external libraries. Also, my parser, lexer, engine, and exporter is free and open source.
 
 ## ⚠️ Minimum Requirements:
 * Windows XP 32 bit and above
-* Visual C++ Redistributable 2013
+* Visual C++ Redistributable 2013 (x86)
+
+## Known Bugs:
+* Stuttering while playing formula.
+* Fix: It is sometimes normal due to memory saving to avoid memory leaks but you need to close some apps as it increases CPU Usage.
+* My formula sounds different when I paste my formula from a bytebeat composer website.
+* Fix: Your formula is sometimes C-Compatible or not. Since these websites compiled through JavaScript, it will sound different. Also, the engine, parser, and lexer are almost perfect since I made this using AI. Make sure you double check your formula if it is C or JavaScript, or check for latest versions of my composer app.
+* When I export to WAV, it crashed.
+* Fix: Do not click on any part of this app because clicking repeatedly on an unresponsive window makes the problem worse. Therefore, it floods the operating system with unprocessed commands. This forces the system to queue up more tasks while it is already struggling to process the initial freeze. Since the app is not threaded on export, it will say not responding for short while.
+* Visual C++ Runtime Error popup on splash screen?!
+* Reason: I compiled on debug and added debug version of VC++ 2013 Redistributable DLLs. Which is why I added this? Because I will handle this app for errors and crashes. So if you see this, do not click anything else on the popup, it will just close for split 1 second.
 
 ## For bug reporting or feature request, email reyesgavinjarred@gmail.com or go to the issues tab and write there...
