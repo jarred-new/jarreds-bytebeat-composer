@@ -1,5 +1,5 @@
 # jarreds-bytebeat-composer
-(a,k.a JarredsBeatComposer) compose your C-Compatible bytebeat formulas for Windows
+(a,k.a JarredsBeatComposer) compose your C-Compatible bytebeat formulas for both Windows and Android
 <img width="1080" height="651" alt="JarredsBeatComposerSplash" src="https://github.com/user-attachments/assets/a0e5739e-c8ef-4455-9d9f-d67532ae3fe1" />
 
 ## ❓ What is Bytebeat?
