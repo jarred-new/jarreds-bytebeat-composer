@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<Toolbar
+		android:id="@+id/mainToolbar"
+		android:layout_width="match_parent"
+		android:layout_height="80dp"
+		android:background="@color/colorPrimary"/>
+
+	<HorizontalScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/colorPrimary">
+
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<Button
+				android:layout_width="wrap_content"
+				style="?android:attr/buttonBarButtonStyle"
+				android:layout_height="wrap_content"
+				android:id="@+id/mainPlay"
+				android:text="Play ▶️"/>
+
+			<Button
+				android:layout_width="wrap_content"
+				style="?android:attr/buttonBarButtonStyle"
+				android:layout_height="wrap_content"
+				android:id="@+id/mainStop"
+				android:text="Stop ⏹️️"/>
+
+			<TextView
+				android:layout_width="80dp"
+				android:layout_height="match_parent"
+				android:text="Frequency:"
+				android:textAppearance="?android:attr/textAppearanceSmall"
+				android:gravity="center"/>
+
+			<EditText
+				android:layout_width="90dp"
+				android:inputType="number"
+				android:layout_height="match_parent"
+				android:ems="10"
+				android:id="@+id/mainFrequencyEdit"/>
+
+			<Spinner
+				android:id="@+id/mainBytebeatType"
+				android:layout_width="230dp"
+				android:layout_height="match_parent"
+				android:popupBackground="#c3d7ef"/>
+
+		</LinearLayout>
+
+	</HorizontalScrollView>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<EditText
+			android:id="@+id/mainEditFormula"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="top"
+			android:inputType="textMultiLine"
+			android:minLines="10"
+			android:padding="8dp"
+			android:background="#ffffff"
+			android:textColor="#000000"/>
+
+		<LinearLayout
+			android:id="@+id/mainOutputLog"
+			android:layout_width="match_parent"
+			android:layout_height="167dp"
+			android:layout_gravity="bottom"
+			android:background="@color/colorPrimaryDark"
+			android:orientation="vertical"
+			android:padding="8dp"
+			android:alpha="0.0">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Output Log:"
+				android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+			<ListView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:id="@+id/mainListOutput"/>
+
+		</LinearLayout>
+
+		<ImageButton
+			android:id="@+id/fab"
+			android:layout_width="56dp"
+			android:layout_height="56dp"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentEnd="true"
+			android:layout_alignParentRight="true"
+			android:layout_margin="16dp"
+			android:elevation="6dp"
+			android:padding="16dp"
+			android:scaleType="centerInside"
+			android:background="@drawable/fabStyle"
+			android:contentDescription="Output Log"
+			android:src="@drawable/ic_output"
+			android:layout_gravity="bottom|right"/>
+
+	</FrameLayout>
+
+</LinearLayout>
+
