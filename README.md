@@ -45,8 +45,12 @@ online needs WiFi or Ethernet, while offline doesn't need it.
 Which resulted me to build this project and with the help of AI, I can build my own parser, lexer, engine, and exporter from scratch without needing help of external libraries. Also, my parser, lexer, engine, and exporter is free and open source.
 
 ## ⚠️ Minimum Requirements:
-* Windows XP 32 bit and above
+For Windows:
+* Windows 7 32/64 bit and above
 * Visual C++ Redistributable 2013 (x86)
+
+For Android:
+* Android Lollipop (5.1) and above
 
 ## Known Bugs:
 * Stuttering while playing formula.
