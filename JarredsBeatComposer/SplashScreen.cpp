@@ -42,8 +42,11 @@ void CSplashScreen::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	
-	HBITMAP hBmp = (HBITMAP)::LoadImage(AfxGetInstanceHandle(), 
-		MAKEINTRESOURCE(IDB_SPLASHSCREEN), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
+	//HBITMAP hBmp = (HBITMAP)::LoadImage(AfxGetInstanceHandle(), 
+	//	MAKEINTRESOURCE(IDB_SPLASHSCREEN_NORMAL), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
+
+	HBITMAP hBmp = (HBITMAP)::LoadImage(AfxGetInstanceHandle(),
+		MAKEINTRESOURCE(IDB_SPLASHSCREEN_BETA), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
 
 	if (hBmp) {
 		CDC memDC;

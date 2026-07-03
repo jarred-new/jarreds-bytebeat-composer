@@ -22,19 +22,22 @@ protected: // create from serialization only
 	CJarredsBeatComposerView();
 	DECLARE_DYNCREATE(CJarredsBeatComposerView)
 
-// Attributes
+	// Flag to suppress handling of EN_CHANGE notifications while setting text programmatically
+	bool m_settingTextProgrammatically;
+
+	// Attributes
 public:
 	CJarredsBeatComposerDoc* GetDocument() const;
 
-// Operations
+	// Operations
 public:
 
-// Overrides
+	// Overrides
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
 
-// Implementation
+	// Implementation
 public:
 	virtual ~CJarredsBeatComposerView();
 #ifdef _DEBUG
@@ -44,7 +47,7 @@ public:
 
 protected:
 
-// Generated message map functions
+	// Generated message map functions
 protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
@@ -57,6 +60,7 @@ public:
 	afx_msg void OnPaint();
 	afx_msg void OnEnChange();
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 };
 
 #ifndef _DEBUG  // debug version in JarredsBeatComposerView.cpp

@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(CJarredsBeatComposerView, CEditView)
 	ON_WM_PAINT()
 	ON_CONTROL_REFLECT(EN_CHANGE, &CJarredsBeatComposerView::OnEnChange)
 	ON_WM_VSCROLL()
+	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 // CJarredsBeatComposerView construction/destruction
@@ -44,7 +45,7 @@ END_MESSAGE_MAP()
 CJarredsBeatComposerView::CJarredsBeatComposerView()
 {
 	// TODO: add construction code here
-
+	m_settingTextProgrammatically = false;
 }
 
 CJarredsBeatComposerView::~CJarredsBeatComposerView()
@@ -57,7 +58,7 @@ BOOL CJarredsBeatComposerView::PreCreateWindow(CREATESTRUCT& cs)
 	//  the CREATESTRUCT cs
 
 	BOOL bPreCreated = CEditView::PreCreateWindow(cs);
-	cs.style &= ~(ES_AUTOHSCROLL|WS_HSCROLL);	// Enable word-wrapping
+	cs.style &= ~(ES_AUTOHSCROLL|/*ES_AUTOVSCROLL | WS_VSCROLL |*/ WS_HSCROLL);	// Enable word-wrapping
 
 	return bPreCreated;
 }
@@ -109,7 +110,23 @@ void CJarredsBeatComposerView::OnInitialUpdate()
 {
 	CEditView::OnInitialUpdate();
 
-	GetEditCtrl().SetMargins(50, 0);
+	CEdit& edit = GetEditCtrl();	
+	edit.SetMargins(50, 0);
+
+	// Only apply the default template text for new/untitled documents and when the edit is empty.
+	// If the document is associated with a file (has a path) we should not overwrite the loaded content.
+	bool bHasPath = (GetDocument() && !GetDocument()->GetPathName().IsEmpty());
+	int len = edit.GetWindowTextLength();
+
+	if (!bHasPath && len == 0) {
+		m_settingTextProgrammatically = true;
+		edit.SetWindowTextW(_T("t*(((t>>12)|(t>>8))&(63&(t>>4)))"));
+		m_settingTextProgrammatically = false;
+
+		// Programmatic initial text shouldn't mark the document as modified.
+		if (GetDocument())
+			GetDocument()->SetModifiedFlag(FALSE);
+	}
 }
 
 
@@ -137,7 +154,7 @@ void CJarredsBeatComposerView::OnPaint()
 	// 4. Draw the line numbers
 	CFont* pOldFont = dc.SelectObject(GetFont());
 	dc.SetTextColor(RGB(23, 212, 136)); // Gray text for numbers
-	dc.SetBkMode(TRANSPARENT);
+dc.SetBkMode(TRANSPARENT);
 
 	TEXTMETRIC tm;
 	dc.GetTextMetrics(&tm);
@@ -165,10 +182,9 @@ void CJarredsBeatComposerView::OnPaint()
 
 void CJarredsBeatComposerView::OnEnChange()
 {
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CEditView::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
+	// Only mark the document modified when the change was not triggered programmatically.
+	if (!m_settingTextProgrammatically && GetDocument())
+		GetDocument()->SetModifiedFlag(TRUE);
 
 	Invalidate();
 	UpdateWindow();
@@ -178,6 +194,13 @@ void CJarredsBeatComposerView::OnEnChange()
 void CJarredsBeatComposerView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	CEditView::OnVScroll(nSBCode, nPos, pScrollBar);
+	Invalidate();
+	UpdateWindow();
+}
+
+void CJarredsBeatComposerView::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	CEditView::OnHScroll(nSBCode, nPos, pScrollBar);
 	Invalidate();
 	UpdateWindow();
 }

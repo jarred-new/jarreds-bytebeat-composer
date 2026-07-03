@@ -48,6 +48,9 @@
 #define IDD_DIALOG_FREQ                 312
 #define IDD_DIALOG_SPLASHSCREEN         314
 #define IDB_SPLASHSCREEN                315
+#define IDB_SPLASHSCREEN_BETA           315
+#define IDB_SPLASHSCREEN1               316
+#define IDB_SPLASHSCREEN_NORMAL         316
 #define IDD_DIALOG_WAVEXPORTER          317
 #define IDB_BYTEBEATSMALL               321
 #define IDB_PNG2                        322
@@ -66,13 +69,14 @@
 #define ID_FILE_EXPORT                  32774
 #define ID_BUTTON2                      32776
 #define ID_BUTTON_SETFREQ               32776
+#define ID_COMBOTYPE                    32778
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        323
-#define _APS_NEXT_COMMAND_VALUE         32778
+#define _APS_NEXT_RESOURCE_VALUE        324
+#define _APS_NEXT_COMMAND_VALUE         32779
 #define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

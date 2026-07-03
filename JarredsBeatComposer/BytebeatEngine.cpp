@@ -633,6 +633,23 @@ bool CBytebeatEngine::Sample(
 	return true;
 }
 
+bool CBytebeatEngine::SampleSigned(
+	uint32_t t,
+	int8_t& sample)
+{
+	int64_t result = 0;
+	if (!Evaluate(t, result))
+	{
+		sample = 0;
+		return false;
+	}
+	// Normalize to signed 8-bit bytebeat output (map 0..255 -> -128..127)
+	uint8_t u = static_cast<uint8_t>(result & 0xFF);
+	sample = static_cast<int8_t>(static_cast<int16_t>(u) - 128);
+
+	return true;
+}
+
 bool CBytebeatEngine::EvaluateNode(
 	BytebeatNode* node,
 	uint32_t t,

@@ -73,6 +73,11 @@ public:
 	afx_msg void OnButtonSetfreq();
 protected:
 	int freq;
+	CMFCRibbonComboBox* pCombo;
+	CMFCRibbonBar* pRibbon;
+	int nSel;
+public:
+	afx_msg void OnCombotype();
 };
 
 

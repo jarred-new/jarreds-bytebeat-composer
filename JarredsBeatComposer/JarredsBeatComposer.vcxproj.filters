@@ -183,5 +183,8 @@
     <Image Include="res\bytebeatlarge.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\splashsc.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

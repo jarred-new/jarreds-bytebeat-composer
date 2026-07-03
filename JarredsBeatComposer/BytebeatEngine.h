@@ -157,6 +157,10 @@ public:
 		uint32_t t,
 		uint8_t& sample);
 
+	bool SampleSigned(
+		uint32_t t,
+		int8_t& sample);
+
 public:
 
 	bool HasParseError() const;

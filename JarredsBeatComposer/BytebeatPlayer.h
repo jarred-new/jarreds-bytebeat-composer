@@ -14,6 +14,7 @@ public:
 	~CBytebeatPlayer();
 
 	bool Start(CBytebeatEngine* engine, int sampleRate);
+	bool StartSigned(CBytebeatEngine* engine, int sampleRate);
 	void Stop();
 
 	bool IsPlaying() const;
@@ -23,7 +24,11 @@ private:
 	static DWORD WINAPI AudioThreadProc(
 		LPVOID param);
 
+	static DWORD WINAPI AudioSignedThreadProc(
+		LPVOID param);
+
 	void AudioLoop();
+	void AudioLoopSigned();
 
 private:
 

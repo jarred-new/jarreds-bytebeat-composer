@@ -3,6 +3,7 @@
 #include "BytebeatEngine.h"
 #include "Writer16_32.h"
 #include "resource.h"
+#include <algorithm>
 
 #pragma pack(push, 1)
 struct WAVHeader
@@ -29,7 +30,8 @@ bool CWavExporter::Export(LPCTSTR path,
 	CBytebeatEngine& engine,
 	int sampleRate,
 	int seconds,
-	bool isCEngine)
+	bool isCEngine,
+	int isSigned)
 {
 	if (isCEngine)
 	{
@@ -66,13 +68,20 @@ bool CWavExporter::Export(LPCTSTR path,
 
 		// 4. Generate Audio (Sine Wave)
 		for (int t = 0; t < num_samples; t++) {
-			// Simple 440Hz tone
-			uint8_t sample;
+			if (isSigned == 0)
+			{
+				uint8_t sample;
+				if (!engine.Sample(t, sample))
+					sample = 0;
 
-			if (!engine.Sample(t, sample))
-				sample = 0;
+				putchar(sample);
+			} else if (isSigned == 1) {
+				int8_t sample;
+				if (!engine.SampleSigned(t, sample))
+					sample = 0;
 
-			putchar(sample);
+				putchar(sample);
+			}
 		}
 
 		CString msg;
@@ -101,40 +110,90 @@ bool CWavExporter::Export(LPCTSTR path,
 			return false;
 		}
 
-		uint32_t totalSamples =
-			sampleRate * seconds;
+		// WAV parameters
+		const uint16_t numChannels = 1;
+		const uint16_t bitsPerSample = 8; // original code writes 1 byte per sample
+		const uint16_t bytesPerSample = bitsPerSample / 8;
+		const uint32_t totalSamples = static_cast<uint32_t>(sampleRate) * static_cast<uint32_t>(seconds);
+		const uint32_t dataSize = totalSamples * bytesPerSample;
+		const uint32_t byteRate = sampleRate * numChannels * bytesPerSample;
+		const uint16_t blockAlign = numChannels * bytesPerSample;
 
-		uint32_t dataSize =
-			totalSamples;
-
-		WAVHeader header;
-
-		header.sampleRate = sampleRate;
-		header.byteRate = sampleRate;
-		header.blockAlign = 1;
-		header.dataSize = dataSize;
-		header.riffSize = 36 + dataSize;
-
-		file.Write(&header, sizeof(header));
-
-		// ----------------------------
-		// AUDIO LOOP
-		// ----------------------------
-
-		for (uint32_t t = 0; t < totalSamples; t++)
+		// Write RIFF header (little-endian)
+		struct RiffHeader
 		{
-			uint8_t sample = 0;
+			char riff[4];
+			uint32_t chunkSize;
+			char wave[4];
+			char fmt[4];
+			uint32_t subchunk1Size;
+			uint16_t audioFormat;
+			uint16_t numChannels;
+			uint32_t sampleRate;
+			uint32_t byteRate;
+			uint16_t blockAlign;
+			uint16_t bitsPerSample;
+			char data[4];
+			uint32_t dataSize;
+		} hdr;
 
-			if (engine.HasParseError())
+		memcpy(hdr.riff, "RIFF", 4);
+		hdr.chunkSize = 36 + dataSize;
+		memcpy(hdr.wave, "WAVE", 4);
+		memcpy(hdr.fmt, "fmt ", 4);
+		hdr.subchunk1Size = 16; // PCM
+		hdr.audioFormat = 1; // PCM
+		hdr.numChannels = numChannels;
+		hdr.sampleRate = static_cast<uint32_t>(sampleRate);
+		hdr.byteRate = byteRate;
+		hdr.blockAlign = blockAlign;
+		hdr.bitsPerSample = bitsPerSample;
+		memcpy(hdr.data, "data", 4);
+		hdr.dataSize = dataSize;
+
+		file.Write(&hdr, sizeof(hdr));
+
+		// ----------------------------
+		// AUDIO LOOP (buffered)
+		// ----------------------------
+
+		const size_t BUFFER_SAMPLES = 4096;
+		std::vector<char> buffer;
+		buffer.resize(BUFFER_SAMPLES * bytesPerSample);
+
+		uint32_t samplesWritten = 0;
+		while (samplesWritten < totalSamples)
+		{
+			uint32_t chunk = std::min<uint32_t>(BUFFER_SAMPLES, totalSamples - samplesWritten);
+
+			for (uint32_t i = 0; i < chunk; ++i)
 			{
-				sample = 0;
-			}
-			else
-			{
-				engine.Sample(t, sample);
+				uint32_t t = samplesWritten + i;
+
+				if (isSigned == 0)
+				{
+					uint8_t sample = 0;
+					if (!engine.HasParseError())
+					{
+						engine.Sample(t, sample);
+					}
+					// 8-bit WAV is typically unsigned; keep user's value as-is
+					buffer[i] = static_cast<char>(sample);
+				}
+				else // isSigned == 1
+				{
+					int8_t sample = 0;
+					if (!engine.HasParseError())
+					{
+						engine.SampleSigned(t, sample);
+					}
+					// convert signed int8_t to stored byte preserving bit-pattern
+					buffer[i] = *reinterpret_cast<char*>(&sample);
+				}
 			}
 
-			file.Write(&sample, 1);
+			file.Write(buffer.data(), chunk * bytesPerSample);
+			samplesWritten += chunk;
 		}
 
 		// ----------------------------

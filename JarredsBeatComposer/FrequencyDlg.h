@@ -22,4 +22,5 @@ protected:
 public:
 	int m_freq;
 	afx_msg void OnEnChangeEdit1();
+	void SetFrequency(int freq) { m_freq = freq; };
 };

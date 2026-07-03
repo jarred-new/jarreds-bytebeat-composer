@@ -11,9 +11,10 @@ class CBytebeatEngine;
 class CWavExporter
 {
 public:
-	static bool Export(LPCTSTR path,
-		CBytebeatEngine& engine,
-		int sampleRate,
-		int seconds,
-		bool isCEngine);
+	static bool Export(LPCTSTR path, 
+		CBytebeatEngine& engine, 
+		int sampleRate, 
+		int seconds, 
+		bool isCEngine, 
+		int isSigned);
 };

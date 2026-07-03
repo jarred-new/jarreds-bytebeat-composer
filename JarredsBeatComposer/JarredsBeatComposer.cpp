@@ -86,18 +86,41 @@ BOOL CJarredsBeatComposerApp::InitInstance()
 
 	CSplashScreen* pSplash = new CSplashScreen();
 
-	if (pSplash->Create(IDD_DIALOG_SPLASHSCREEN, NULL)) {
+	if (pSplash && pSplash->Create(IDD_DIALOG_SPLASHSCREEN, NULL)) {
 		pSplash->ShowWindow(SW_SHOW);
 		pSplash->UpdateWindow();
+	} else {
+		// cleanup on failed create
+		delete pSplash;
+		pSplash = nullptr;
 	}
 
-	MSG msg;
+	MSG msg = {};
 	DWORD dwStart = GetTickCount();
-	while (GetTickCount() - dwStart < 4000) {
-		if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+	DWORD dwTimeout = 4000;
+	bool bQuit = false;
+
+	while (!bQuit && (GetTickCount() - dwStart < dwTimeout)) {
+		// Process all pending messages
+		while (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+			if (msg.message == WM_QUIT) {
+				bQuit = true;
+				break;
+			}
 			::TranslateMessage(&msg);
 			::DispatchMessage(&msg);
 		}
+
+		// Prevent busy-waiting, allow system to schedule and reduce CPU
+		Sleep(10);
+	}
+
+	// Ensure splash is destroyed and memory freed
+	if (pSplash) {
+		if (::IsWindow(pSplash->GetSafeHwnd()))
+			pSplash->DestroyWindow();
+		delete pSplash;
+		pSplash = nullptr;
 	}
 
 	// Initialize OLE libraries
@@ -248,6 +271,8 @@ void CJarredsBeatComposerApp::SaveCustomState()
 }
 
 // CJarredsBeatComposerApp message handlers
+
+
 
 
 

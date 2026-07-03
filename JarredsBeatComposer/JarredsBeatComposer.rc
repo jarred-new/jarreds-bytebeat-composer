@@ -31,9 +31,13 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\JarredsBeatComposer.ico"
+
 IDR_BytebeatTYPE        ICON                    "res\\JarredsBeatComposerDoc.ico"
+
 IDI_OUTPUT_WND          ICON                    "res\\output_wnd.ico"
+
 IDI_OUTPUT_WND_HC       ICON                    "res\\output_wnd_hc.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -41,13 +45,21 @@ IDI_OUTPUT_WND_HC       ICON                    "res\\output_wnd_hc.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
 IDR_MAINFRAME_256       BITMAP                  "res\\Toolbar256.bmp"
+
 IDB_FILELARGE           BITMAP                  "res\\filelarge.bmp"
+
 IDB_FILESMALL           BITMAP                  "res\\filesmall.bmp"
+
 IDB_WRITELARGE          BITMAP                  "res\\writelarge.bmp"
+
 IDB_WRITESMALL          BITMAP                  "res\\writesmall.bmp"
+
 IDB_BUTTONS             BITMAP                  "res\\buttons.bmp"
+
 IDB_MAIN                BITMAP                  "res\\main.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -266,11 +278,12 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "About"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,27,28,21,20
-    LTEXT           "JarredsBeatComposer, Version 0.0.1",IDC_STATIC,55,27,140,8,SS_NOPREFIX
-    LTEXT           "by Jarred Apps",IDC_STATIC,55,39,114,8
+    ICON            IDR_MAINFRAME,IDC_STATIC,19,28,21,20
+    LTEXT           "JarredsBeatComposer, Version 0.0.2 beta",IDC_STATIC,47,27,140,8,SS_NOPREFIX
+    LTEXT           "by Jarred Apps",IDC_STATIC,47,39,114,8
     DEFPUSHBUTTON   "OK",IDOK,146,106,50,14,WS_GROUP
-    LTEXT           "Thank you for choosing this app!",IDC_STATIC,45,73,106,8
+    LTEXT           "Thank you for choosing this app!",IDC_STATIC,45,55,106,8
+    LTEXT           "Note: This app is on beta! Features are still being developed and some are just fixing bugs.",IDC_STATIC,14,71,175,32,WS_BORDER
 END
 
 
@@ -338,6 +351,17 @@ END
 //
 
 IDR_RIBBON              RT_RIBBON_XML           "res\\ribbon.mfcribbon-ms"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -495,7 +519,7 @@ END
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (Republic of the Philippines) resources
+// English (Philippines) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENP)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_PHILIPPINES
@@ -506,7 +530,10 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_PHILIPPINES
 // Bitmap
 //
 
-IDB_SPLASHSCREEN        BITMAP                  "res\\JarredsBeatComposerSplash.bmp"
+IDB_SPLASHSCREEN_BETA   BITMAP                  "res\\JarredsBeatComposerSplash.bmp"
+
+IDB_SPLASHSCREEN_NORMAL BITMAP                  "res\\splashsc.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -528,7 +555,7 @@ IDD_DIALOG_SPLASHSCREEN DIALOGEX 0, 0, 554, 308
 STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",PBS_MARQUEE | WS_BORDER,14,226,526,15
+    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",PBS_MARQUEE | WS_BORDER,14,189,526,15
 END
 
 IDD_DIALOG_WAVEXPORTER DIALOGEX 0, 0, 327, 246
@@ -633,8 +660,21 @@ END
 //
 
 IDB_BYTEBEATSMALL       PNG                     "res\\bytebeatsmall.png"
+
 IDB_BYTEBEATLARGE       PNG                     "res\\bytebeatlarge.png"
-#endif    // English (Republic of the Philippines) resources
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_DIALOG_SPLASHSCREEN AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    // English (Philippines) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

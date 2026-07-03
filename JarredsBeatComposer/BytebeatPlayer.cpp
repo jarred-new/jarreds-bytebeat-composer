@@ -40,6 +40,30 @@ bool CBytebeatPlayer::Start(
 	return m_thread != NULL;
 }
 
+bool CBytebeatPlayer::StartSigned(
+	CBytebeatEngine* engine, 
+	int sampleRate)
+{
+	if (m_running)
+		return false;
+
+	m_engine = engine;
+	m_sampleRate = sampleRate;
+	m_t = 0;
+
+	m_running = true;
+
+	m_thread = CreateThread(
+		NULL,
+		0,
+		AudioSignedThreadProc,
+		this,
+		0,
+		NULL);
+
+	return m_thread != NULL;
+}
+
 void CBytebeatPlayer::Stop()
 {
 	m_running = false;
@@ -67,6 +91,17 @@ DWORD WINAPI CBytebeatPlayer::AudioThreadProc(
 		(CBytebeatPlayer*)param;
 
 	self->AudioLoop();
+
+	return 0;
+}
+
+DWORD WINAPI CBytebeatPlayer::AudioSignedThreadProc(
+	LPVOID param)
+{
+	CBytebeatPlayer* self =
+		(CBytebeatPlayer*)param;
+
+	self->AudioLoopSigned();
 
 	return 0;
 }
@@ -144,3 +179,60 @@ void CBytebeatPlayer::AudioLoop()
 	}
 }
 
+void CBytebeatPlayer::AudioLoopSigned()
+{
+	const int bufferSize = 4096;
+	int8_t buffer[bufferSize];
+	while (m_running)
+	{
+		for (int i = 0; i < bufferSize; i++)
+		{
+			int8_t sample = 0;
+			if (m_engine &&
+				!m_engine->HasParseError())
+			{
+				m_engine->SampleSigned(m_t, sample);
+			}
+			buffer[i] = sample;
+			m_t++;
+		}
+		// Play buffer using waveOut (simple blocking)
+		WAVEHDR hdr = { 0 };
+		hdr.lpData = (LPSTR)buffer;
+		hdr.dwBufferLength = bufferSize;
+		HWAVEOUT hWave;
+		WAVEFORMATEX format;
+		format.wFormatTag = WAVE_FORMAT_PCM;
+		format.nChannels = 1;
+		format.nSamplesPerSec = m_sampleRate;
+		format.wBitsPerSample = 8;
+		format.nBlockAlign = 1;
+		format.nAvgBytesPerSec = m_sampleRate;
+		format.cbSize = 0;
+		waveOutOpen(
+			&hWave,
+			WAVE_MAPPER,
+			&format,
+			0,
+			0,
+			CALLBACK_NULL);
+		waveOutPrepareHeader(
+			hWave,
+			&hdr,
+			sizeof(hdr));
+		waveOutWrite(
+			hWave,
+			&hdr,
+			sizeof(hdr));
+		// wait for playback
+		while (!(hdr.dwFlags & WHDR_DONE))
+		{
+			Sleep(0.01);
+		}
+		waveOutUnprepareHeader(
+			hWave,
+			&hdr,
+			sizeof(hdr));
+		waveOutClose(hWave);
+	}
+}

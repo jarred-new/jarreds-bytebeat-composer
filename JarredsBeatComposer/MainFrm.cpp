@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_OUTPUT_LOG, &CMainFrame::OnUpdateViewOutputLog)
 	ON_COMMAND(ID_FILE_EXPORT, &CMainFrame::OnFileExport)
 	ON_COMMAND(ID_BUTTON_SETFREQ, &CMainFrame::OnButtonSetfreq)
+	ON_COMMAND(ID_COMBOTYPE, &CMainFrame::OnCombotype)
 END_MESSAGE_MAP()
 
 // CMainFrame construction/destruction
@@ -117,8 +118,25 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// improves the usability of the taskbar because the document name is visible with the thumbnail.
 	ModifyStyle(0, FWS_PREFIXTITLE);
 
-	/*auto* editTextView = (CJarredsBeatComposerView*)MDIGetActive()->GetActiveView();
-	editTextView->SetWindowTextW(L"t*(42&t<<10)");*/
+	nSel = 0;
+	pCombo = nullptr;
+	pRibbon = &m_wndRibbonBar;
+	if (pRibbon)
+	{
+		CMFCRibbonBaseElement* pElem = pRibbon->FindByID(ID_COMBOTYPE);
+		pCombo = DYNAMIC_DOWNCAST(CMFCRibbonComboBox, pElem);
+	}
+	if (!pCombo)
+		return 0;
+
+	// Populate items once (safe to call repeatedly)
+	if (pCombo->GetCount() == 0)
+	{
+		pCombo->AddItem(_T("Bytebeat"));
+		pCombo->AddItem(_T("Signed Bytebeat"));
+		pCombo->SelectItem(0); // default
+	}
+
 	return 0;
 }
 
@@ -282,29 +300,49 @@ void CMainFrame::OnButtonPlay()
 
 	m_engine.SetFormula(formula);
 
-	//int freq = 8000;
-
 	CString playLog;
 	playLog.Format(L"Playing: %s", f);
 
-	m_wndOutput.AddLog(playLog);
-	if (!m_player.Start(&m_engine, freq)) {
-		if (m_engine.HasParseError()) {
-			CString msg1;
-			msg1.Format(L"Parser Error: %s",
-				m_engine.GetParseError());
+	if (nSel == 0)
+	{
+		m_wndOutput.AddLog(playLog);
+		if (!m_player.Start(&m_engine, freq)) {
+			if (m_engine.HasParseError()) {
+				CString msg1;
+				msg1.Format(L"Parser Error: %s",
+					m_engine.GetParseError());
 
-			m_wndOutput.AddLog(L"Stopped, error has been detected");
-			m_wndOutput.AddLog(msg1);
+				m_wndOutput.AddLog(L"Stopped, error has been detected");
+				m_wndOutput.AddLog(msg1);
+			}
+
+			if (m_engine.HasRuntimeError()) {
+				CString msg2;
+				msg2.Format(L"Runtime Error: %d",
+					m_engine.GetRuntimeError());
+
+				m_wndOutput.AddLog(L"Stopped, error has been detected");
+				m_wndOutput.AddLog(msg2);
+			}
 		}
-
-		if (m_engine.HasRuntimeError()) {
-			CString msg2;
-			msg2.Format(L"Runtime Error: %d",
-				m_engine.GetRuntimeError());
-
-			m_wndOutput.AddLog(L"Stopped, error has been detected");
-			m_wndOutput.AddLog(msg2);
+	}
+	else if (nSel == 1) {
+		m_wndOutput.AddLog(playLog);
+		if (!m_player.StartSigned(&m_engine, freq)) {
+			if (m_engine.HasParseError()) {
+				CString msg1;
+				msg1.Format(L"Parser Error: %s",
+					m_engine.GetParseError());
+				m_wndOutput.AddLog(L"Stopped, error has been detected");
+				m_wndOutput.AddLog(msg1);
+			}
+			if (m_engine.HasRuntimeError()) {
+				CString msg2;
+				msg2.Format(L"Runtime Error: %d",
+					m_engine.GetRuntimeError());
+				m_wndOutput.AddLog(L"Stopped, error has been detected");
+				m_wndOutput.AddLog(msg2);
+			}
 		}
 	}
 }
@@ -367,7 +405,8 @@ void CMainFrame::OnFileExport()
 				m_engine, 
 				freq, 
 				seconds, 
-				isCEngine);
+				isCEngine,
+				nSel);
 
 			m_wndOutput.AddLog(L"Export Done!");
 		}
@@ -379,8 +418,26 @@ void CMainFrame::OnButtonSetfreq()
 {
 	CFrequencyDlg freqDlg;
 
+	freqDlg.SetFrequency(freq);
 	if (freqDlg.DoModal() == IDOK) {
 		this->freq = freqDlg.m_freq;
 		UpdateData(TRUE);
 	}
+}
+
+void CMainFrame::OnCombotype()
+{
+	// Read current selection
+	nSel = pCombo->GetCurSel();
+	
+
+	// Handle selection change:
+	// - update application state here (call a method on your document/controller)
+	// - or send a message/command to other parts of the app
+	// Example: call a hypothetical handler function (implement it in your class)
+	// OnWaveTypeChanged(nSel, sSel);
+	
+	//CString sSel;
+	//sSel.Format(L"%d", nSel);
+	//AfxMessageBox(sSel);
 }
