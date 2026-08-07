@@ -167,7 +167,7 @@ void CBytebeatPlayer::AudioLoop()
 		// wait for playback
 		while (!(hdr.dwFlags & WHDR_DONE))
 		{
-			Sleep(0.01);
+			Sleep(1);
 		}
 
 		waveOutUnprepareHeader(
@@ -227,7 +227,7 @@ void CBytebeatPlayer::AudioLoopSigned()
 		// wait for playback
 		while (!(hdr.dwFlags & WHDR_DONE))
 		{
-			Sleep(0.01);
+			Sleep(1);
 		}
 		waveOutUnprepareHeader(
 			hWave,

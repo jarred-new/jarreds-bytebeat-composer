@@ -105,8 +105,15 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 	}
 
+	CString databaseDir = GetAppDir() + L"formulas.txt";
+	m_wndLibrary.LoadDatabase(databaseDir);
+
 	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndLibrary.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndOutput);
+	DockPane(&m_wndLibrary);
+
+	
 
 	// set the visual manager and style based on persisted value
 	OnApplicationLook(theApp.m_nAppLook);
@@ -163,6 +170,16 @@ BOOL CMainFrame::CreateDockingWindows()
 		return FALSE; // failed to create
 	}
 
+	// Create library window
+	CString strLibraryWnd;
+	bNameValid = strLibraryWnd.LoadString(IDS_LIBRARY_WND);
+	ASSERT(bNameValid);
+	if (!m_wndLibrary.Create(strLibraryWnd, this, CRect(0, 0, 200, 300), TRUE, ID_VIEW_LIBRARYWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("Failed to create Library window\n");
+		return FALSE; // failed to create
+	}
+
 	SetDockingWindowIcons(theApp.m_bHiColorIcons);
 	return TRUE;
 }
@@ -173,6 +190,47 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 	m_wndOutput.SetIcon(hOutputBarIcon, FALSE);
 
 	UpdateMDITabbedBarsIcons();
+}
+
+void CMainFrame::CreateNewDocumentWithFormula(const CString& formula)
+{
+	// Get the first document template
+	POSITION pos = theApp.GetFirstDocTemplatePosition();
+	CDocTemplate* pTemplate = theApp.GetNextDocTemplate(pos);
+
+	if (pTemplate)
+	{
+		// Create a new document
+		CDocument* pDoc = pTemplate->CreateNewDocument();
+		if (pDoc)
+		{
+			// Create a new frame for this document
+			CFrameWnd* pFrame = pTemplate->CreateNewFrame(pDoc, NULL);
+			if (pFrame)
+			{
+				// Initialize the document
+				pTemplate->InitialUpdateFrame(pFrame, pDoc, TRUE);
+
+				// Get the view from the document
+				POSITION viewPos = pDoc->GetFirstViewPosition();
+				if (viewPos)
+				{
+					CView* pView = pDoc->GetNextView(viewPos);
+					CJarredsBeatComposerView* pEditView = dynamic_cast<CJarredsBeatComposerView*>(pView);
+					if (pEditView)
+					{
+						// Set the formula text in the edit control
+						CEdit& editCtrl = pEditView->GetEditCtrl();
+						editCtrl.SetWindowTextW(formula);
+						
+						// Mark document as modified
+						if (pDoc)
+							pDoc->SetModifiedFlag(TRUE);
+					}
+				}
+			}
+		}
+	}
 }
 
 // CMainFrame diagnostics

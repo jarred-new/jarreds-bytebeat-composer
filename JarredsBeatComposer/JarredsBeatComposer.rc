@@ -497,6 +497,7 @@ END
 STRINGTABLE
 BEGIN
     IDS_OUTPUT_WND          "Output"
+    IDS_LIBRARY_WND         "Bytebeat Library"
 END
 
 STRINGTABLE

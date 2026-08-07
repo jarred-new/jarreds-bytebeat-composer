@@ -14,6 +14,7 @@
 
 #pragma once
 #include "OutputWnd.h"
+#include "BytebeatLibraryPane.h"
 
 #include "BytebeatEngine.h"
 #include "BytebeatPlayer.h"
@@ -48,6 +49,7 @@ protected:  // control bar embedded members
 	CMFCToolBarImages m_PanelImages;
 	CMFCRibbonStatusBar  m_wndStatusBar;
 	COutputWnd        m_wndOutput;
+	CBytebeatLibraryPane m_wndLibrary;
 
 // Generated message map functions
 protected:
@@ -65,12 +67,42 @@ protected:
 	CBytebeatEngine m_engine;
 	CBytebeatPlayer m_player;
 public:
+	void CreateNewDocumentWithFormula(const CString& formula);
 	afx_msg void OnButtonPlay();
 	afx_msg void OnButtonStop();
 	afx_msg void OnViewOutputLog();
 	afx_msg void OnUpdateViewOutputLog(CCmdUI *pCmdUI);
 	afx_msg void OnFileExport();
 	afx_msg void OnButtonSetfreq();
+
+protected:
+	CString GetAppDir()
+	{
+		wchar_t szPath[MAX_PATH];
+
+		// Get full path of current executable
+		GetModuleFileNameW(
+			NULL,
+			szPath,
+			MAX_PATH);
+
+
+		CString path(szPath);
+
+
+		// Find last backslash
+		int lastSlash = path.ReverseFind(_T('\\'));
+
+
+		if (lastSlash != -1)
+		{
+			return path.Left(lastSlash + 1);
+		}
+
+
+		return path;
+	}
+
 protected:
 	int freq;
 	CMFCRibbonComboBox* pCombo;

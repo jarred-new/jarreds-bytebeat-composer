@@ -103,6 +103,7 @@
   <ItemGroup>
     <ClInclude Include="BytebeatEngine.h" />
     <ClInclude Include="BytebeatLexer.h" />
+    <ClInclude Include="BytebeatLibraryPane.h" />
     <ClInclude Include="BytebeatPlayer.h" />
     <ClInclude Include="BytebeatToken.h" />
     <ClInclude Include="ChildFrm.h" />
@@ -123,6 +124,7 @@
   <ItemGroup>
     <ClCompile Include="BytebeatEngine.cpp" />
     <ClCompile Include="BytebeatLexer.cpp" />
+    <ClCompile Include="BytebeatLibraryPane.cpp" />
     <ClCompile Include="BytebeatPlayer.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="FrequencyDlg.cpp" />
