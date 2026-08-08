@@ -31,13 +31,10 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\JarredsBeatComposer.ico"
-
 IDR_BytebeatTYPE        ICON                    "res\\JarredsBeatComposerDoc.ico"
-
 IDI_OUTPUT_WND          ICON                    "res\\output_wnd.ico"
-
 IDI_OUTPUT_WND_HC       ICON                    "res\\output_wnd_hc.ico"
-
+IDI_LIBRARY_WND         ICON                    "res\\library_wnd.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -45,21 +42,13 @@ IDI_OUTPUT_WND_HC       ICON                    "res\\output_wnd_hc.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
-
 IDR_MAINFRAME_256       BITMAP                  "res\\Toolbar256.bmp"
-
 IDB_FILELARGE           BITMAP                  "res\\filelarge.bmp"
-
 IDB_FILESMALL           BITMAP                  "res\\filesmall.bmp"
-
 IDB_WRITELARGE          BITMAP                  "res\\writelarge.bmp"
-
 IDB_WRITESMALL          BITMAP                  "res\\writesmall.bmp"
-
 IDB_BUTTONS             BITMAP                  "res\\buttons.bmp"
-
 IDB_MAIN                BITMAP                  "res\\main.bmp"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -358,9 +347,9 @@ IDR_RIBBON              RT_RIBBON_XML           "res\\ribbon.mfcribbon-ms"
 // AFX_DIALOG_LAYOUT
 //
 
-IDD_ABOUTBOX AFX_DIALOG_LAYOUT
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT 
 BEGIN
-    0
+    0x0000
 END
 
 
@@ -520,7 +509,26 @@ END
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (Philippines) resources
+// English (United Kingdom) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_LIBRARY_WND_HC      ICON                    "res\\library_wnd_hc.ico"
+#endif    // English (United Kingdom) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (Republic of the Philippines) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENP)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_PHILIPPINES
@@ -532,9 +540,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_PHILIPPINES
 //
 
 IDB_SPLASHSCREEN_BETA   BITMAP                  "res\\JarredsBeatComposerSplash.bmp"
-
 IDB_SPLASHSCREEN_NORMAL BITMAP                  "res\\splashsc.bmp"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -613,6 +619,17 @@ END
 #endif    // APSTUDIO_INVOKED
 
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_DIALOG_SPLASHSCREEN AFX_DIALOG_LAYOUT 
+BEGIN
+    0x0000
+END
+
+
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -661,21 +678,8 @@ END
 //
 
 IDB_BYTEBEATSMALL       PNG                     "res\\bytebeatsmall.png"
-
 IDB_BYTEBEATLARGE       PNG                     "res\\bytebeatlarge.png"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// AFX_DIALOG_LAYOUT
-//
-
-IDD_DIALOG_SPLASHSCREEN AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
-#endif    // English (Philippines) resources
+#endif    // English (Republic of the Philippines) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

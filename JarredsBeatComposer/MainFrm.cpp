@@ -44,6 +44,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_FILE_EXPORT, &CMainFrame::OnFileExport)
 	ON_COMMAND(ID_BUTTON_SETFREQ, &CMainFrame::OnButtonSetfreq)
 	ON_COMMAND(ID_COMBOTYPE, &CMainFrame::OnCombotype)
+	ON_COMMAND(ID_VIEW_LIBRARY, &CMainFrame::OnViewLibrary)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_LIBRARY, &CMainFrame::OnUpdateViewLibrary)
 END_MESSAGE_MAP()
 
 // CMainFrame construction/destruction
@@ -106,14 +108,18 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	CString databaseDir = GetAppDir() + L"formulas.txt";
-	m_wndLibrary.LoadDatabase(databaseDir);
+	CFileStatus status;
+	if (CFile::GetStatus(databaseDir, status)) {
+		m_wndLibrary.LoadDatabase(databaseDir);
+	}
+	else {
+		AfxMessageBox(L"We cannot find formulas.txt file, it might be renamed or deleted.\nNote: We will leave the library as blank");
+	}
 
 	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndLibrary.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndOutput);
+	m_wndLibrary.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndLibrary);
-
-	
 
 	// set the visual manager and style based on persisted value
 	OnApplicationLook(theApp.m_nAppLook);
@@ -186,8 +192,20 @@ BOOL CMainFrame::CreateDockingWindows()
 
 void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 {
-	HICON hOutputBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_OUTPUT_WND_HC : IDI_OUTPUT_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
+	HICON hOutputBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), 
+		MAKEINTRESOURCE(bHiColorIcons ? IDI_OUTPUT_WND_HC : IDI_OUTPUT_WND), 
+		IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), 
+		::GetSystemMetrics(SM_CYSMICON), 
+		0);
+
+	HICON hLibraryBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(),
+		MAKEINTRESOURCE(bHiColorIcons ? IDI_LIBRARY_WND_HC : IDI_LIBRARY_WND),
+		IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON),
+		::GetSystemMetrics(SM_CYSMICON),
+		0);
+
 	m_wndOutput.SetIcon(hOutputBarIcon, FALSE);
+	m_wndLibrary.SetIcon(hLibraryBarIcon, FALSE);
 
 	UpdateMDITabbedBarsIcons();
 }
@@ -498,4 +516,69 @@ void CMainFrame::OnCombotype()
 	//CString sSel;
 	//sSel.Format(L"%d", nSel);
 	//AfxMessageBox(sSel);
+}
+
+
+void CMainFrame::OnViewLibrary()
+{
+	TRACE0("OnViewLibrary called\n");
+
+	// Validate that the library pane window has been created and is valid
+	HWND hWnd = m_wndLibrary.GetSafeHwnd();
+	if (!hWnd)
+	{
+		TRACE0("ERROR: Library pane window handle is invalid!\n");
+		return;
+	}
+
+	// Make sure the window handle is still valid
+	if (!IsWindow(hWnd))
+	{
+		TRACE0("ERROR: Library pane window is not a valid window!\n");
+		return;
+	}
+
+	try
+	{
+		TRACE1("Library pane visible: %d\n", m_wndLibrary.IsVisible());
+
+		if (m_wndLibrary.IsVisible())
+		{
+			TRACE0("Hiding library pane...\n");
+			m_wndLibrary.ShowPane(FALSE, FALSE, FALSE); // Hide
+		}
+		else
+		{
+			TRACE0("Showing library pane...\n");
+			m_wndLibrary.ShowPane(TRUE, FALSE, TRUE);  // Show & activate
+		}
+	}
+	catch (CException* e)
+	{
+		TRACE0("CException occurred in OnViewLibrary\n");
+		e->Delete();
+	}
+	catch (...)
+	{
+		TRACE0("Unknown exception occurred in OnViewLibrary\n");
+	}
+}
+
+
+void CMainFrame::OnUpdateViewLibrary(CCmdUI *pCmdUI)
+{
+	if (!pCmdUI)
+		return;
+
+	HWND hWnd = m_wndLibrary.GetSafeHwnd();
+	if (hWnd && IsWindow(hWnd))
+	{
+		pCmdUI->SetCheck(m_wndLibrary.IsVisible() ? 1 : 0);
+		pCmdUI->Enable(TRUE);
+	}
+	else
+	{
+		pCmdUI->SetCheck(0);
+		pCmdUI->Enable(FALSE);
+	}
 }

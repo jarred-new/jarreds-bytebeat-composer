@@ -42,8 +42,16 @@ int CBytebeatLibraryPane::OnCreate(
 	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
+	// Get the client area rectangle
+	CRect rect;
+	GetClientRect(&rect);
 
-	m_tree.Create(
+	if (rect.IsRectEmpty())
+	{
+		rect.SetRect(0, 0, 200, 300);
+	}
+
+	if (!m_tree.Create(
 		WS_VISIBLE |
 		WS_CHILD |
 		WS_BORDER |
@@ -52,10 +60,13 @@ int CBytebeatLibraryPane::OnCreate(
 		TVS_HASBUTTONS |
 		TVS_SHOWSELALWAYS,
 
-		CRect(0, 0, 0, 0),
+		rect,
 		this,
-		1001);
-
+		1001))
+	{
+		TRACE0("Failed to create tree control\n");
+		return -1;
+	}
 
 	/*m_tree.InsertItem(
 		_T("Bytebeat Formula Library"));*/

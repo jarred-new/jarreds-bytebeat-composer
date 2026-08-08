@@ -74,6 +74,9 @@ public:
 	afx_msg void OnUpdateViewOutputLog(CCmdUI *pCmdUI);
 	afx_msg void OnFileExport();
 	afx_msg void OnButtonSetfreq();
+	afx_msg void OnViewLibrary();
+	afx_msg void OnUpdateViewLibrary(CCmdUI *pCmdUI);
+	afx_msg void OnCombotype();
 
 protected:
 	CString GetAppDir()
@@ -108,8 +111,10 @@ protected:
 	CMFCRibbonComboBox* pCombo;
 	CMFCRibbonBar* pRibbon;
 	int nSel;
-public:
-	afx_msg void OnCombotype();
+
+/*public:
+	afx_msg void OnViewLibrary();
+	afx_msg void OnUpdateViewLibrary(CCmdUI *pCmdUI); */
 };
 
 

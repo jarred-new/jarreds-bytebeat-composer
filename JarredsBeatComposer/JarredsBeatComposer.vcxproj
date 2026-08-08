@@ -156,10 +156,13 @@
     <Image Include="res\bytebeatsmall.png" />
     <Image Include="res\filelarge.bmp" />
     <Image Include="res\filesmall.bmp" />
+    <Image Include="res\icon1.ico" />
     <Image Include="res\JarredsBeatComposer.ico" />
     <Image Include="res\JarredsBeatComposerDoc.ico" />
     <Image Include="res\JarredsBeatComposerSplash.bmp" />
     <Image Include="res\JarredsBeatComposerSplash.png" />
+    <Image Include="res\library_wnd.ico" />
+    <Image Include="res\library_wnd_hc.ico" />
     <Image Include="res\main.bmp" />
     <Image Include="res\output_wnd.ico" />
     <Image Include="res\output_wnd_hc.ico" />
