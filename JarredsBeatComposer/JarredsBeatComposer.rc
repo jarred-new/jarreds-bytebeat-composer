@@ -267,12 +267,14 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "About"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,19,28,21,20
-    LTEXT           "JarredsBeatComposer, Version 0.0.2 beta",IDC_STATIC,47,27,140,8,SS_NOPREFIX
+    ICON            IDR_MAINFRAME,IDC_STATIC,19,28,20,20
+    LTEXT           "JarredsBeatComposer, Version 0.0.2",IDC_STATIC,47,27,140,8,SS_NOPREFIX
     LTEXT           "by Jarred Apps",IDC_STATIC,47,39,114,8
     DEFPUSHBUTTON   "OK",IDOK,146,106,50,14,WS_GROUP
     LTEXT           "Thank you for choosing this app!",IDC_STATIC,45,55,106,8
-    LTEXT           "Note: This app is on beta! Features are still being developed and some are just fixing bugs.",IDC_STATIC,14,71,175,32,WS_BORDER
+    LTEXT           "Special Thanks to viznut for the formulas!",IDC_STATIC,14,71,175,11,WS_BORDER
+    PUSHBUTTON      "&Give it a star!",IDC_BUTTON1,14,84,59,14
+    PUSHBUTTON      "&viznut's formulas",IDC_BUTTON2,74,84,81,14
 END
 
 

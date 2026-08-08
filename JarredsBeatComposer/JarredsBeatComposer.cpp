@@ -230,6 +230,9 @@ protected:
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
@@ -242,6 +245,8 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+	ON_BN_CLICKED(IDC_BUTTON1, &CAboutDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CAboutDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 // App command to run the dialog
@@ -271,8 +276,23 @@ void CJarredsBeatComposerApp::SaveCustomState()
 }
 
 // CJarredsBeatComposerApp message handlers
+void CAboutDlg::OnBnClickedButton1()
+{
+	ShellExecute(NULL,
+		L"open",
+		L"https://github.com/jarred-new/jarreds-bytebeat-composer",
+		NULL,
+		NULL,
+		SW_SHOW);
+}
 
 
-
-
-
+void CAboutDlg::OnBnClickedButton2()
+{
+	ShellExecute(NULL,
+		L"open",
+		L"https://viznut.fi/demos/unix/bytebeat_formulas.txt",
+		NULL,
+		NULL,
+		SW_SHOW);
+}

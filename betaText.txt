@@ -1,0 +1,3 @@
+Please copy this whole note and paste it on the about dialog...
+
+Note: This app is on beta! Features are still being developed and some are just fixing bugs.

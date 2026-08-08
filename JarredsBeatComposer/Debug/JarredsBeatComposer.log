@@ -1,9 +1,42 @@
-﻿Build started 08/08/2026 2:05:42 pm.
+﻿Build started 08/08/2026 2:56:51 pm.
      1>Project "C:\Users\JarredIzKool\Desktop\jarreds-bytebeat-composer\JarredsBeatComposer\JarredsBeatComposer.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\JarredsBeatComposer.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ChildFrm.cpp FrequencyDlg.cpp JarredsBeatComposer.cpp JarredsBeatComposerDoc.cpp JarredsBeatComposerView.cpp MainFrm.cpp OutputWnd.cpp SplashScreen.cpp WavExporter.cpp WavExporterDlg.cpp
+         JarredsBeatComposer.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         WavExporterDlg.cpp
+         WavExporter.cpp
+         SplashScreen.cpp
+         OutputWnd.cpp
+         MainFrm.cpp
+         JarredsBeatComposerView.cpp
+         JarredsBeatComposerDoc.cpp
+         FrequencyDlg.cpp
+         ChildFrm.cpp
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /l"0x0409" /IDebug\ /nologo /fo"Debug\JarredsBeatComposer.res" JarredsBeatComposer.rc 
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\JarredIzKool\Desktop\jarreds-bytebeat-composer\Debug\JarredsBeatComposer.exe" /INCREMENTAL /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"C:\Users\JarredIzKool\Desktop\jarreds-bytebeat-composer\Debug\JarredsBeatComposer.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"wWinMainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\JarredIzKool\Desktop\jarreds-bytebeat-composer\Debug\JarredsBeatComposer.lib" /MACHINE:X86 Debug\JarredsBeatComposer.res
+         Debug\BytebeatEngine.obj
+         Debug\BytebeatLexer.obj
+         Debug\BytebeatLibraryPane.obj
+         Debug\BytebeatPlayer.obj
+         Debug\ChildFrm.obj
+         Debug\FrequencyDlg.obj
+         Debug\JarredsBeatComposer.obj
+         Debug\JarredsBeatComposerDoc.obj
+         Debug\JarredsBeatComposerView.obj
+         Debug\MainFrm.obj
+         Debug\OutputWnd.obj
+         Debug\SplashScreen.obj
+         Debug\stdafx.obj
+         Debug\WavExporter.obj
+         Debug\WavExporterDlg.obj
+         Debug\Writer16_32.obj
          JarredsBeatComposer.vcxproj -> C:\Users\JarredIzKool\Desktop\jarreds-bytebeat-composer\Debug\JarredsBeatComposer.exe
      1>Done Building Project "C:\Users\JarredIzKool\Desktop\jarreds-bytebeat-composer\JarredsBeatComposer\JarredsBeatComposer.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.41
+Time Elapsed 00:00:20.83

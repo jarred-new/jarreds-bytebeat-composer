@@ -111,7 +111,7 @@ void CJarredsBeatComposerView::OnInitialUpdate()
 	CEditView::OnInitialUpdate();
 
 	CEdit& edit = GetEditCtrl();	
-	edit.SetMargins(50, 0);
+	edit.SetMargins(55, 0);
 
 	// Only apply the default template text for new/untitled documents and when the edit is empty.
 	// If the document is associated with a file (has a path) we should not overwrite the loaded content.
@@ -120,7 +120,7 @@ void CJarredsBeatComposerView::OnInitialUpdate()
 
 	if (!bHasPath && len == 0) {
 		m_settingTextProgrammatically = true;
-		edit.SetWindowTextW(_T("t*(((t>>12)|(t>>8))&(63&(t>>4)))"));
+		edit.SetWindowTextW(_T("t*(42&t>>10)"));
 		m_settingTextProgrammatically = false;
 
 		// Programmatic initial text shouldn't mark the document as modified.
