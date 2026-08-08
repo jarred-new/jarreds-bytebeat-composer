@@ -59,7 +59,10 @@ For Android:
 * Fix: Your formula is sometimes C-Compatible or not. Since these websites compiled through JavaScript, it will sound different. Also, the engine, parser, and lexer are almost perfect since I made this using AI. Make sure you double check your formula if it is C or JavaScript, or check for latest versions of my composer app.
 * When I export to WAV, it crashed.
 * Fix: Do not click on any part of this app because clicking repeatedly on an unresponsive window makes the problem worse. Therefore, it floods the operating system with unprocessed commands. This forces the system to queue up more tasks while it is already struggling to process the initial freeze. Since the app is not threaded on export, it will say not responding for short while.
-* Visual C++ Runtime Error popup on splash screen?!
-* Reason: I compiled on debug and added debug version of VC++ 2013 Redistributable DLLs. Which is why I added this? Because I will handle this app for errors and crashes. So if you see this, do not click anything else on the popup, it will just close for split 1 second.
+
+## ⚠️ Take Note!
+If you're in the version of 0.02+ and you've accidentally deleted the formulas.txt file in the application path, there is a download link for this that you can fix it. [Click here to download formulas.txt](formulas.txt)
+
+## Special thanks to [viznut](https://viznut.fi/demos/unix/bytebeat_formulas.txt) for the formulas!
 
 ## For bug reporting or feature request, email reyesgavinjarred@gmail.com or go to the issues tab and write there...
