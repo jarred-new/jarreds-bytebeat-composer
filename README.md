@@ -62,3 +62,7 @@ For Android:
 ## If you have issues, please report them here:
 * [Report issues here for Windows](https://github.com/jarred-new/jarreds-bytebeat-composer-winqt/issues)
 * [Report issues here for Android](https://github.com/jarred-new/jarreds-bytebeat-composer-android/issues)
+
+## Special Thanks
+* [viznut](https://github.com/viznut) for discovering Bytebeat and creating the first Bytebeat formulas.
+* [the graphic zone](https://www.facebook.com/profile.php?id=61589491050574) for the palette themes I put to my Windows version.
