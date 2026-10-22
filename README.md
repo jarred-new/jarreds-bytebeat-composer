@@ -1,7 +1,8 @@
 # 🎊 Welcome to Jarred's Bytebeat Composer!
 ### (a.k.a JarredsBeatComposer)
 
-### Finding the old repository? [Click here to go to the legacy version](https://github.com/jarred-new/jarreds-bytebeat-composer-android)
+### Finding the old repository? [Click here to go to the legacy version](https://github.com/jarred-new/jarreds-bytebeat-composer-legacy)
+### Reminder: The legacy version is now officially archived. You cannot make issues, forks, and etc.
 
 This is a simple (but little bit advanced) bytebeat composer that allows you to create and play bytebeat music using your phone, tablet, or computer both online or offline. 
 
